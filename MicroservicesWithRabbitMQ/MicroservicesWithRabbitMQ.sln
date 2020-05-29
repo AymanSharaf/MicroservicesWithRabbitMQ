@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentatio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroservicesWithRabbitMQ.Domain.Core", "MicroservicesWithRabbitMQ.Domain.Core\MicroservicesWithRabbitMQ.Domain.Core.csproj", "{7936FEBC-56F5-4A44-A69B-291D9544E93B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroservicesWithRabbitMQ.Infrastructure.Bus", "MicroservicesWithRabbitMQ.Infrastructure.Bus\MicroservicesWithRabbitMQ.Infrastructure.Bus.csproj", "{477607AC-864E-41B0-8FEB-B81EA6E54DE2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,12 +27,17 @@ Global
 		{7936FEBC-56F5-4A44-A69B-291D9544E93B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7936FEBC-56F5-4A44-A69B-291D9544E93B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7936FEBC-56F5-4A44-A69B-291D9544E93B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{477607AC-864E-41B0-8FEB-B81EA6E54DE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{477607AC-864E-41B0-8FEB-B81EA6E54DE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{477607AC-864E-41B0-8FEB-B81EA6E54DE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{477607AC-864E-41B0-8FEB-B81EA6E54DE2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{7936FEBC-56F5-4A44-A69B-291D9544E93B} = {167B0025-903D-4B2F-A1AE-9DE4DBF3681B}
+		{477607AC-864E-41B0-8FEB-B81EA6E54DE2} = {7C1837CB-2DCA-488C-9D5C-149BF22A2861}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {619900F1-6E81-445D-A2F5-E2DADD68A4EF}
