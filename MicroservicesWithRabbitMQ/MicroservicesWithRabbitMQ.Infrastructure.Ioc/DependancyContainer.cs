@@ -1,4 +1,8 @@
-﻿using MicroservicesWithRabbitMQ.Domain.Core.Bus;
+﻿using MicroservicesWithRabbitMQ.Banking.Application.Interfaces;
+using MicroservicesWithRabbitMQ.Banking.Application.Services;
+using MicroservicesWithRabbitMQ.Banking.Data.Repositories;
+using MicroservicesWithRabbitMQ.Banking.Domain.Interfaces;
+using MicroservicesWithRabbitMQ.Domain.Core.Bus;
 using MicroservicesWithRabbitMQ.Infrastructure.Bus;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -15,6 +19,12 @@ namespace MicroservicesWithRabbitMQ.Infrastructure.Ioc
         {
             // Domain Bus
             services.AddTransient<IEventBus, RabbitMQBus>();
+
+            // Application Services
+            services.AddTransient<IAccountService, AccountService>();
+
+            //Data
+            services.AddTransient<IAccountRepository, AccountRepository>();
         }
     }
 }
