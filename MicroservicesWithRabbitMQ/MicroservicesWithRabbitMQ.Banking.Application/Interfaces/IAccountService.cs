@@ -1,4 +1,5 @@
-﻿using MicroservicesWithRabbitMQ.Banking.Domain.Models;
+﻿using MicroservicesWithRabbitMQ.Banking.Application.Models;
+using MicroservicesWithRabbitMQ.Banking.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace MicroservicesWithRabbitMQ.Banking.Application.Interfaces
     public interface IAccountService
     {
         IEnumerable<Account> GetAccounts();
+        void Transfer(AccountTransfer accountTransfer);
     }
 }
