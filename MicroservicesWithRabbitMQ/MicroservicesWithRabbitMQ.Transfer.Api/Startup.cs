@@ -2,10 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MediatR;
+using MicroservicesWithRabbitMQ.Banking.Data.Context;
+using MicroservicesWithRabbitMQ.Domain.Core.Bus;
+using MicroservicesWithRabbitMQ.Infrastructure.Ioc;
+using MicroservicesWithRabbitMQ.Transfer.Domain.EventHandlers;
+using MicroservicesWithRabbitMQ.Transfer.Domain.Events;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,7 +32,25 @@ namespace MicroservicesWithRabbitMQ.Transfer.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<TransferDbContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("TransferDbConnection"));
+            });
             services.AddControllers();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Transfer Microservice", Version = "v1" });
+            });
+
+            services.AddMediatR(typeof(Startup));
+
+            RegisterServices(services);
+            services.AddControllers();
+        }
+
+        private void RegisterServices(IServiceCollection services)
+        {
+            DependancyContainer.RegisterTranferServices(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,6 +63,13 @@ namespace MicroservicesWithRabbitMQ.Transfer.Api
 
             app.UseHttpsRedirection();
 
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Transfer Microservice v1");
+                c.RoutePrefix = string.Empty;
+            });
+
             app.UseRouting();
 
             app.UseAuthorization();
@@ -46,6 +78,14 @@ namespace MicroservicesWithRabbitMQ.Transfer.Api
             {
                 endpoints.MapControllers();
             });
+            ConfigureEventBus(app);
+        }
+
+        private static void ConfigureEventBus(IApplicationBuilder app)
+        {
+            var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
+            eventBus.Subscribe<TransferCreatedEvent, TransferEventHandler>();
+
         }
     }
 }
