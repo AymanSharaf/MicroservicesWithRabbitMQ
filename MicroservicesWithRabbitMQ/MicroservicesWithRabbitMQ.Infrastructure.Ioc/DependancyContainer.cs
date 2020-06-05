@@ -28,7 +28,12 @@ namespace MicroservicesWithRabbitMQ.Infrastructure.Ioc
         public static void RegisterServices(IServiceCollection services) 
         {
             //Domain Bus
-            services.AddTransient<IEventBus, RabbitMQBus>();
+            services.AddSingleton<IEventBus, RabbitMQBus>(sp=> 
+            {
+                var scopeFactory = sp.GetRequiredService<IServiceScopeFactory>();
+                return new RabbitMQBus(sp.GetService<IMediator>(),scopeFactory);
+            
+            });
 
             // Domain Banking Commands
             services.AddTransient<IRequestHandler<CreateTransferCommand, bool>, TransferCommandHandler>();
@@ -45,7 +50,15 @@ namespace MicroservicesWithRabbitMQ.Infrastructure.Ioc
         public static void RegisterTranferServices(IServiceCollection services) 
         {
             // Domain Bus
-            services.AddTransient<IEventBus, RabbitMQBus>();
+            services.AddSingleton<IEventBus, RabbitMQBus>(sp =>
+            {
+                var scopeFactory = sp.GetRequiredService<IServiceScopeFactory>();
+                return new RabbitMQBus(sp.GetService<IMediator>(), scopeFactory);
+
+            });
+
+            //Subscriptions
+            services.AddTransient<TransferEventHandler>();
 
             //Domain Events
             services.AddTransient<IEventHandler<TransferCreatedEvent>, TransferEventHandler>();

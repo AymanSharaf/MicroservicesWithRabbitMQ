@@ -17,6 +17,12 @@ namespace MicroservicesWithRabbitMQ.Transfer.Data.Repositories
         {
             _transferDbContext = transferDbContext;
         }
+
+        public void Add(TransferLog transferLog)
+        {
+            _transferDbContext.TransferLogs.Add(transferLog);
+        }
+
         public IEnumerable<TransferLog> GetTransfers()
         {
             return _transferDbContext.TransferLogs.ToList();
