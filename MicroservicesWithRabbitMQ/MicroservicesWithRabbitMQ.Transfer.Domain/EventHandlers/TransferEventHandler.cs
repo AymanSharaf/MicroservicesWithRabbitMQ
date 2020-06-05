@@ -19,12 +19,12 @@ namespace MicroservicesWithRabbitMQ.Transfer.Domain.EventHandlers
         }
         public Task Handle(TransferCreatedEvent @event)
         {
-            _transferRepository.Add(new Models.TransferLog 
+            _transferRepository.Add(new Models.TransferLog
             {
                 FromAccount = @event.From,
-                ToAccount= @event.To,
-                TransferAmount= @event.Amount
-            
+                ToAccount = @event.To,
+                TransferAmount = @event.Amount
+
             });
             return Task.CompletedTask;
         }
